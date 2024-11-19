@@ -1,4 +1,4 @@
-				
+sudo apt update && sudo apt upgrade && sudo apt autoremove				
 sudo apt update && sudo apt install apache2 -y && sudo service apache2 status
 
 sudo apt install mysql-server -y && sudo systemctl status mysql-server
