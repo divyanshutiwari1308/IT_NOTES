@@ -1,0 +1,39 @@
+To set Visual Studio Code (VS Code) as the default editor
+in FileZilla on Ubuntu, follow these steps: ====== UBUNTU 
+Find the VS Code Path
+               Open the terminal and type:
+		which code
+		(It will show something like /usr/bin/code).
+Open FileZilla Settings
+- In FileZilla, go to Edit
+       > Preferences.
+Set Custom Editor
+- In the Preferences window, go to File editing.
+- Select Use custom editor
+       and enter /usr/bin/code.
+Save and Test
+The file should open in VS Code.
+ 
+- Right-click a file in FileZilla and select View/Edit.
+---
+
+---
+     To set VS Code
+as the default editor in FileZilla on Windows in simple steps:è Windows
+
+1. Find VS Code Path
+- Go to this location:
+                C:\Users\<YourUsername>\AppData\Local\Programs\Microsoft
+VS Code\Code.exe  
+
+Open FileZilla Settings
+- In FileZilla, click on Edit
+       > Settings.
+Set Custom Editor
+- In the Settings window, select File
+       editing on the left.
+- Check Use custom editor.
+- Browse and select the Code.exe file from the path in Step 1.
+Save and Test
+- Click OK to save.
+- Right-click a file in FileZilla and choose View/Edit—it should open in VS Code.

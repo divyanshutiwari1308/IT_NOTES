@@ -1,0 +1,6 @@
+Add package.json
+"homepage":"./"
+
+npm run build 
+
+And paste complete bundle on server it deploy in static url 

@@ -1,0 +1,18 @@
+Change Node Version 
+nvm use <version number>
+e.g.: nvm use 16
+
+nvm alias default 16
+
+nvm list
+
+==================================
+
+	PHP
+
+sudo update-alternatives --config php
+
+sudo update-alternatives --config phpize
+sudo update-alternatives --config php-config
+
+sudo update-alternatives --config php-fpm

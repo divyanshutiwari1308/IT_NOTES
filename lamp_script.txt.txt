@@ -1,0 +1,101 @@
+#!/bin/bash
+
+# Update package list
+echo "Updating package list..."
+sudo apt update -y
+
+# Install Apache2
+echo "Installing Apache2..."
+sudo apt install apache2 -y
+
+# Check Apache2 status
+echo "Checking Apache2 status..."
+sudo service apache2 status
+
+# Install MySQL server
+echo "Installing MySQL Server..."
+sudo apt install mysql-server -y
+
+# Check MySQL server status
+echo "Checking MySQL Server status..."
+sudo systemctl status mysql-server
+
+# Configure MySQL root user with a password
+echo "Configuring MySQL root user..."
+sudo mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'ntf12345';"
+sudo mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;"
+sudo mysql -uroot -e "FLUSH PRIVILEGES;"
+
+# Install PPA for PHP packages
+echo "Adding PHP repository..."
+sudo add-apt-repository ppa:ondrej/php -y
+sudo apt update -y
+
+# Install PHP 7.4 and required extensions
+echo "Installing PHP 7.4 and required extensions..."
+sudo apt install php7.4 php7.4-cli php7.4-fpm php7.4-mysql php7.4-mbstring php7.4-xml php7.4-curl php7.4-zip -y
+
+# Install PHP 8.1 and required extensions
+echo "Installing PHP 8.1 and required extensions..."
+sudo apt install php8.1 php8.1-cli php8.1-fpm php8.1-mysql php8.1-mbstring php8.1-xml php8.1-curl php8.1-zip -y
+
+# Install PHP 8.2 and required extensions
+echo "Installing PHP 8.2 and required extensions..."
+sudo apt install php8.2 php8.2-cli php8.2-fpm php8.2-mysql php8.2-mbstring php8.2-xml php8.2-curl php8.2-zip -y
+
+# Install PHP Apache integration (default PHP 8.x)
+echo "Installing PHP Apache integration..."
+sudo apt install php libapache2-mod-php php-mysql -y
+
+# Check PHP versions
+echo "Checking installed PHP versions..."
+php -v
+
+# Set default PHP version (change to 8.2, 8.1, or 7.4 as needed)
+echo "Setting default PHP version to 8.2..."
+sudo update-alternatives --set php /usr/bin/php8.2
+sudo update-alternatives --set phpize /usr/bin/phpize8.2
+sudo update-alternatives --set php-config /usr/bin/php-config8.2
+sudo systemctl restart apache2
+
+# Set proper ownership for the web directory
+echo "Setting permissions for /var/www/html..."
+sudo chown -R $USER:$USER /var/www/html
+
+# Install wget and curl
+echo "Installing wget and curl..."
+sudo apt install wget curl -y
+
+# Download and install phpMyAdmin
+echo "Downloading phpMyAdmin..."
+wget https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip
+
+echo "Installing unzip..."
+sudo apt install unzip -y
+unzip phpMyAdmin-5.2.1-all-languages.zip
+
+# Move phpMyAdmin to the web server directory
+echo "Moving phpMyAdmin to /var/www/html/"
+mv phpMyAdmin-5.2.1-all-languages /var/www/html/padmin
+
+# Restart Apache2 to apply changes
+echo "Restarting Apache2..."
+sudo systemctl restart apache2
+
+# Configure PHP settings (increase limits)
+echo "Updating PHP settings..."
+sudo sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php/8.2/apache2/php.ini
+sudo sed -i 's/max_input_time = .*/max_input_time = 300/' /etc/php/8.2/apache2/php.ini
+sudo sed -i 's/memory_limit = .*/memory_limit = 1024M/' /etc/php/8.2/apache2/php.ini
+sudo sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1024M/' /etc/php/8.2/apache2/php.ini
+sudo sed -i 's/post_max_size = .*/post_max_size = 1024M/' /etc/php/8.2/apache2/php.ini
+
+# Update Apache2 config to allow .htaccess overrides
+echo "Updating Apache2 configuration..."
+sudo sed -i '/<Directory \/var\/www\/html>/,/<\/Directory>/s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
+# Restart Apache2 to apply changes
+echo "Restarting Apache2 again..."
+sudo systemctl restart apache2
+
+echo "LAMP stack with PHP 7.4, 8.1, and 8.2, and phpMyAdmin installation completed!"

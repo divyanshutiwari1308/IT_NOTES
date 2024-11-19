@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Update package list and install Zsh
+echo "Updating package list..."
+sudo apt update -y
+
+echo "Installing Zsh..."
+sudo apt install zsh -y
+
+# Check installed version of Zsh
+echo "Checking Zsh version..."
+zsh --version
+
+# Check the current default shell
+echo "Current shell: $SHELL"
+
+# Change default shell to Zsh
+echo "Changing default shell to Zsh..."
+chsh -s $(which zsh)
+
+# Install Oh My Zsh
+echo "Installing Oh My Zsh..."
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+
+# Set the Zsh theme to 'robbyrussell'
+echo "Setting ZSH_THEME to 'robbyrussell' in .zshrc..."
+sed -i 's/ZSH_THEME=".*"/ZSH_THEME="robbyrussell"/' ~/.zshrc
+
+# Apply the changes (exit the current shell)
+echo "Exiting to apply changes..."
+exit
+
+# Install zsh-autosuggestions plugin
+echo "Cloning zsh-autosuggestions plugin..."
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+# Install zsh-syntax-highlighting plugin
+echo "Cloning zsh-syntax-highlighting plugin..."
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+# Add the plugins to .zshrc
+echo "Adding plugins to .zshrc..."
+sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
+
+# Apply the changes
+echo "Restarting shell to apply plugins..."
+exec zsh
+
+echo "Zsh installation and configuration with plugins completed!"

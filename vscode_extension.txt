@@ -1,0 +1,6 @@
+- Prettier
+- Auto rename tag
+- Code runner
+- Better Comments
+- Live Server
+- Tabninie

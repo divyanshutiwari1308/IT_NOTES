@@ -1,0 +1,25 @@
+MYSQL Setup:
+
+Create User and Grant Privileges
+
+CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'mypassword';
+
+GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost' WITH GRANT OPTION;
+
+FLUSH PRIVILEGES;
+
+Backup Commands
+
+- Export a specific database:
+mysqldump -u root -p mydatabase > mydatabase_backup.sql
+
+- Export all databases:
+mysqldump -u root -p --all-databases > all_databases_backup.sql
+
+Restore Commands
+
+- Import a specific database:
+mysql -u root -p mydatabase < mydatabase_backup.sql
+
+- Import all databases:
+mysql -u root -p < all_databases_backup.sql
