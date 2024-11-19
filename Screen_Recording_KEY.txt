@@ -1,0 +1,33 @@
+1. Windows:
+
+
+Shortcut to start screen recording:
+Windows + G             to open the Xbox Game Bar.
+Windows + Alt + R       to start/stop recording.
+Note: Xbox Game Bar works primarily for recording games or apps, but it can also record your screen.
+
+Using OBS Studio (Free software for advanced recording)
+If you need more advanced features (e.g., full-screen recording, custom regions, etc.), you can use OBS Studio. You’ll need to set up your own shortcuts in OBS.
+
+Download and install OBS Studio from here.
+In OBS:
+Go to File > Settings > Hotkeys.
+Set your own hotkeys for starting and stopping the recording (e.g., Ctrl + R to start/stop recording).
+2. Ubuntu:
+Using the Built-in GNOME Screenshot and Screen Recording Tool (Ubuntu 20.04+)
+Ubuntu has a built-in screen recording tool with GNOME (Ubuntu’s default desktop environment).
+
+Shortcut to start screen recording:
+Ctrl + Alt + Shift + R to start/stop screen recording.
+The recording will be saved in the Videos folder by default.
+====================================================================================================================
+Using OBS Studio on Ubuntu
+You can also use OBS Studio for advanced recording options on Ubuntu, just like in Windows.
+
+Install OBS Studio:
+
+sudo apt install obs-studio
+Set up the screen recording:
+
+Open OBS Studio.
+Go to File > Settings > Hotkeys to configure your recording shortcuts (e.g., Ctrl + R to start/stop recording).
