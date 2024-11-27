@@ -1,0 +1,69 @@
+#!/bin/bash
+
+
+# Install curl if not already installed
+echo "Installing curl..."
+sudo apt install curl -y
+
+# Install NVM (Node Version Manager)
+echo "Installing NVM (Node Version Manager)..."
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+
+# Load nvm (required for the current shell session)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Install Node.js version 22 using NVM
+echo "Installing Node.js version 22 using NVM..."
+nvm install 22
+
+# Verify Node.js installation
+echo "Verifying Node.js installation..."
+node -v # Should print v22.x.x
+
+# Verify npm installation
+echo "Verifying npm installation..."
+npm -v # Should print npm version 10.x.x
+
+# Install MongoDB 7.0
+echo "Installing MongoDB 7.0..."
+
+# Import MongoDB public GPG key
+curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
+
+# Add MongoDB repository
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | \
+   sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+
+# Update package database
+sudo apt update
+
+# Install MongoDB server
+sudo apt install mongodb-org -y
+
+# Verify MongoDB installation
+echo "Verifying MongoDB installation..."
+mongod --version
+
+# Start MongoDB service
+echo "Starting MongoDB service..."
+sudo systemctl start mongod
+
+# Enable MongoDB service to start on boot
+echo "Enabling MongoDB to start on boot..."
+sudo systemctl enable mongod
+
+# Verify MongoDB service status
+echo "Verifying MongoDB service status..."
+sudo systemctl status mongod
+
+# Start MongoDB shell
+echo "Starting MongoDB shell..."
+mongosh
+
+# Final success message
+echo "Installation completed successfully!"
+echo "Node.js version 22, npm, and MongoDB 7.0 have been installed."
+echo "MongoDB service is running and enabled to start on boot."
+echo "You can access MongoDB using the 'mongosh' command."

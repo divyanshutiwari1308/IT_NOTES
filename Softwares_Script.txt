@@ -1,0 +1,71 @@
+#!/bin/bash
+
+
+# Install required utilities using apt
+echo "Installing curl, wget, and vim..."
+sudo apt install curl wget vim -y
+
+# Install Snap if not already installed
+echo "Installing Snap package manager..."
+sudo apt install snapd -y
+
+# Install Slack via Snap
+echo "Installing Slack via Snap..."
+sudo snap install slack --classic
+
+# Install IPTux via Snap
+echo "Installing IPTux via Snap..."
+sudo snap install iptux
+
+# Install FileZilla via Snap
+echo "Installing FileZilla via Snap..."
+sudo snap install filezilla
+
+# Install OpenJDK 17 and JRE
+echo "Installing OpenJDK 17 and JRE..."
+sudo apt install openjdk-17-jdk openjdk-17-jre -y
+
+# Verify the installation of OpenJDK 17
+echo "Verifying OpenJDK 17 installation..."
+java -version
+javac -version
+
+# Change the default editor in FileZilla
+echo "Changing the default code editor in FileZilla..."
+
+# Define the desired code editor (for example, VSCode)
+EDITOR_PATH="/usr/bin/code"  # Path to your desired code editor (VSCode in this case)
+
+# Check if FileZilla's configuration directory exists
+if [ ! -d "$HOME/.config/filezilla" ]; then
+  echo "FileZilla configuration directory not found! FileZilla might not be installed."
+  exit 1
+fi
+
+# Check if filezilla.xml exists
+FILEZILLA_CONFIG="$HOME/.config/filezilla/filezilla.xml"
+if [ ! -f "$FILEZILLA_CONFIG" ]; then
+  echo "FileZilla configuration file (filezilla.xml) not found!"
+  exit 1
+fi
+
+# Use sed to modify the XML configuration and change the editor path
+echo "Changing the default code editor in FileZilla to $EDITOR_PATH..."
+
+# We are updating the Editor path in filezilla.xml (non-interactive edit using sed)
+sed -i "s|<EditorPath>.*</EditorPath>|<EditorPath>$EDITOR_PATH</EditorPath>|" "$FILEZILLA_CONFIG"
+
+# Verify the change
+if grep -q "<EditorPath>$EDITOR_PATH</EditorPath>" "$FILEZILLA_CONFIG"; then
+  echo "Editor changed successfully to $EDITOR_PATH."
+else
+  echo "Failed to change the editor in FileZilla."
+  exit 1
+fi
+
+# Final message
+echo "Installation complete!"
+echo "Slack, IPTux, and FileZilla have been installed via Snap."
+echo "Curl, Wget, and Vim have been installed using apt."
+echo "OpenJDK 17 and JRE have been installed."
+echo "FileZilla's default editor has been changed to $EDITOR_PATH."
