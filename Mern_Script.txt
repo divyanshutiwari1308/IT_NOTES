@@ -25,6 +25,14 @@ node -v # Should print v22.x.x
 echo "Verifying npm installation..."
 npm -v # Should print npm version 10.x.x
 
+# Install pm2 globally
+echo "Installing PM2 globally..."
+npm install pm2@latest -g
+
+# Verify pm2 installation
+echo "Verifying PM2 installation..."
+pm2 -v # Should print pm2 version
+
 # Install MongoDB 7.0
 echo "Installing MongoDB 7.0..."
 
